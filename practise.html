@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <button onclick="compmove();
+  result('rock'); " >Rock</button>
+  <button onclick="compmove();
+  result('paper')">Paper</button>
+  <button onclick="compmove();
+  result('scissors')">Scissors</button>
+  <script>
+    let computermove="";
+    function compmove(){
+      let rand = Math.random();
+      if (rand>=0 && rand<1/3){
+        computermove = 'rock'; 
+        
+      }else if (rand>=1/3 && rand<2/3){
+        computermove = 'paper';
+      }else if (rand>=2/3 && rand<1){
+        computermove = 'scissors';
+
+      }
+      console.log(computermove);
+      document.querySelector('.compmove').innerHTML = computermove;
+    }
+    let score=JSON.parse(localStorage.getItem('score')) ||{
+        win : 0,
+        loss : 0,
+        tie : 0
+      };
+    function result (a) {
+      
+      let y='';
+      if (computermove==='rock' && a=== 'rock'){
+        y= 'Tie';
+      }else if (computermove === 'paper' && a=== 'rock'){
+        y= 'You loss';
+
+      }else if (computermove === 'scissors' && a=== 'rock'){
+        y= 'You win';
+
+      }
+          
+      if (computermove==='rock' && a=== 'paper'){
+        y= 'You win';
+      }else if (computermove === 'paper' && a=== 'paper'){
+        y= 'Tie';
+
+      }else if (computermove === 'scissors' && a=== 'paper'){
+        y= 'You loss';
+
+      }
+      if (computermove ==='rock' && a=== 'scissors'){
+        y= 'You loss';
+      }else if (computermove === 'paper' && a=== 'scissors'){
+        y= 'You win';
+
+      }else if (computermove === 'scissors' && a=== 'scissors'){
+        y= 'Tie';
+
+      }   
+      
+      console.log(y);
+
+      document.querySelector('.result').innerHTML=y;
+      document.querySelector('.yourmove').innerHTML=a;
+
+      if (y === 'You win'){
+        score.win+=1
+      }else if (y === 'You loss'){
+
+        score.loss+=1
+      }else if(y === 'Tie'){
+        score.tie+=1
+      }
+      localStorage.setItem('score',JSON.stringify(score) );
+      document.querySelector('.win')
+          .innerHTML = `Wins: ${score.win}, Losses: ${score.loss}, Ties: ${score.tie}`;
+
+    }
+    function reeset(){
+      score.win=0,
+      score.loss=0,
+      score.tie=0
+    }
+    
+  </script>
+  <h1>Your move 👇</h1>
+  <p class="yourmove"></p>
+  <h1>Computer move 👇</h1>
+  <p class="compmove"></p>
+  <h1>Result 👇</h1>
+  <p class="result"> </p>
+  <h1>Win 👇 </h1>
+  <p class="win"></p>
+  <h1>Tie 👇</h1>
+  <p class="tie"></p>
+  <h1>Loss 👇 </h1>
+  <p class="loss"></p>
+  <button onclick="reeset()">Reset</button>
+  
+  
+</body>
+</html>
